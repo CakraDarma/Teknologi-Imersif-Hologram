@@ -5,7 +5,7 @@ import SpeechRecognition, {
 } from 'react-speech-recognition';
 import { useEffect, useState } from 'react';
 import { Button } from '@/ui/button';
-import BoxTranscript from '@/components/BoxTranscript';
+// import BoxTranscript from '@/components/BoxTranscript';
 
 export default function Home() {
 	let [isPlaying, setPlaying] = useState(false);
