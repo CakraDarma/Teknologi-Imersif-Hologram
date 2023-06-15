@@ -1,48 +1,81 @@
 'use client';
-import { FC, useState } from 'react';
-import ReactPlayer from 'react-player';
+import 'regenerator-runtime/runtime';
+import SpeechRecognition, {
+	useSpeechRecognition,
+} from 'react-speech-recognition';
+import { useEffect, useState } from 'react';
+import { Button } from '@/ui/button';
+// import BoxTranscript from '@/components/BoxTranscript';
 
-const Page = ({}) => {
+export default function Home() {
 	const [isPlaying, setPlaying] = useState(false);
+	const [video, setVideo] = useState('');
+	const [videoKey, setVideoKey] = useState(0);
 
 	const handlePlay = () => {
-		setPlaying(true);
+		setPlaying(false);
 	};
+
+	const startListening = () =>
+		SpeechRecognition.startListening({ continuous: true, language: 'id' });
+	let { transcript, browserSupportsSpeechRecognition, resetTranscript } =
+		useSpeechRecognition();
+
+	useEffect(() => {
+		startListening();
+		if (transcript.toLowerCase().includes('apa itu pura')) {
+			setPlaying(true);
+			setVideo('2.mp4');
+			resetTranscript();
+			setVideoKey((prevKey) => prevKey + 1);
+		} else if (transcript.toLowerCase().includes('pura di bali')) {
+			setPlaying(true);
+			setVideo('4.mp4');
+			resetTranscript();
+			setVideoKey((prevKey) => prevKey + 1);
+		} else if (transcript.toLowerCase().includes('tes')) {
+			setPlaying(true);
+			setVideo('1.mp4');
+			resetTranscript();
+			setVideoKey((prevKey) => prevKey + 1);
+		}
+	}, [resetTranscript, transcript]);
+
 	return (
-		// <div>
-		// 	{/* <div className='mt-20'>
-		// 		<video controls={false} autoPlay muted playsInline>
-		// 			<source src='/2.mp4' type='video/mp4' />
-		// 		</video>
-		// 		<video src='/2.mp4' controls={true} autoPlay={true} playsInline></video>
-		// 	</div> */}
+		<main className='container mt-20'>
+			<div>
+				<h1 className='text-gray-800 text-center text-5xl font-bold'>
+					Hologram Interaktif
+				</h1>
+				<p className='text-xl mt-10 text-center'>
+					Ayo tanya pertanyaanmu! Media interaktif belajar mengenai Pura
+				</p>
+			</div>
 
-		// 	<div>
-		// 		<button onClick={handlePlay}>Play Video</button>
-		// 		{isPlaying && (
-		// 			<video controls autoPlay>
-		// 				<source src='/2.mp4' type='video/mp4' />
-		// 			</video>
-		// 		)}
-		// 	</div>
-		// </div>
-		<div className='flex flex-row '>
-			<p className='text-black text-lg bg-blue-300 w-max px-2 rounded-sm mb-4 break-words flex justify-center text-center'>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus,
-				expedita voluptatem. Accusamus error officia obcaecati laboriosam
-				veniam, dolores reiciendis velit quis facere voluptatum inventore, ipsa
-				asperiores earum doloribus? Dolores tempore totam maiores, repellat
-				laborum dolore? Saepe delectus dolore fugiat doloribus, veniam, eligendi
-				sapiente quasi rerum quae maxime quas blanditiis ducimus accusamus alias
-				nisi architecto expedita a! Reiciendis, beatae quae? Pariatur placeat
-				accusamus corporis dicta, dolore, nisi, eveniet sed expedita ratione
-				sapiente architecto consequuntur beatae velit! Esse cumque veritatis
-				expedita maxime praesentium, consectetur exercitationem vitae labore
-				ipsa iure velit repellendus eveniet reprehenderit incidunt corporis
-				aspernatur officia sapiente dolorem sit repellat optio.
-			</p>
-		</div>
+			<div className='border-solid border-2 border-gray-800 bg-yellow-50 p-5 flex flex-col mt-20'>
+				<div className='p-5 flex flex-col'>
+					<div className='flex-grow flex justify-center items-center h-96'>
+						{/* <button onClick={handlePlay}>Play Video</button> */}
+						{isPlaying && (
+							<video
+								key={videoKey}
+								controls={true}
+								autoPlay
+								className='border-solid border-2 border-gray-50 max-h-80'
+							>
+								<source src={video} type='video/mp4' />
+							</video>
+						)}
+					</div>
+				</div>
+				<p className='text-black text-lg bg-blue-300 max-w-max px-2 rounded-sm mb-4 overflow-wrap'>
+					{transcript}
+				</p>
+				<div className='flex flex-col gap-1 w-auto'>
+					<Button onClick={startListening}>Start</Button>
+					<Button onClick={SpeechRecognition.stopListening}>Stop</Button>
+				</div>
+			</div>
+		</main>
 	);
-};
-
-export default Page;
+}

@@ -23,59 +23,50 @@ export default function Home() {
 
 	useEffect(() => {
 		startListening();
-		if (transcript.toLowerCase().includes('apa itu pura')) {
+		if (transcript.toLowerCase().includes('mulai program')) {
 			setPlaying(true);
-			setVideo('2.mp4');
+			setVideo('1pembuka.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-		} else if (transcript.toLowerCase().includes('pura di bali')) {
+		} else if (transcript.toLowerCase().includes('tentang pura')) {
 			setPlaying(true);
-			setVideo('3.mp4');
+			setVideo('2tentang.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-		} else if (transcript.toLowerCase().includes('tes')) {
+		} else if (transcript.toLowerCase().includes('lihat pura')) {
 			setPlaying(true);
-			setVideo('1.mp4');
+			setVideo('3lihatpura.mp4');
+			resetTranscript();
+			setVideoKey((prevKey) => prevKey + 1);
+		} else if (transcript.toLowerCase().includes('Daftar Informasi')) {
+			setPlaying(true);
+			setVideo('4menu.mp4');
+			resetTranscript();
+			setVideoKey((prevKey) => prevKey + 1);
+		} else if (transcript.toLowerCase().includes('keluar program')) {
+			setPlaying(true);
+			setVideo('5penutup.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
 		}
 	}, [resetTranscript, transcript]);
 
 	return (
-		<main className='container mt-20'>
-			<div>
-				<h1 className='text-gray-800 text-center text-5xl font-bold'>
-					Hologram Interaktif
-				</h1>
-				<p className='text-xl mt-10 text-center'>
-					Ayo tanya pertanyaanmu! Media interaktif belajar mengenai Pura
-				</p>
-			</div>
-
-			<div className='border-solid border-2 border-gray-800 bg-yellow-50 p-5 flex flex-col mt-20'>
-				<div className='p-5 flex flex-col'>
-					<div className='flex-grow flex justify-center items-center h-96'>
-						{/* <button onClick={handlePlay}>Play Video</button> */}
-						{isPlaying && (
-							<video
-								key={videoKey}
-								controls={true}
-								autoPlay
-								className='border-solid border-2 border-gray-50 max-h-80'
-							>
-								<source src={video} type='video/mp4' />
-							</video>
-						)}
-					</div>
-				</div>
-				<p className='text-black text-lg bg-blue-300 max-w-max px-2 rounded-sm mb-4 overflow-wrap'>
-					{transcript}
-				</p>
-				<div className='flex flex-col gap-1 w-auto'>
-					<Button onClick={startListening}>Start</Button>
-					<Button onClick={SpeechRecognition.stopListening}>Stop</Button>
-				</div>
-			</div>
-		</main>
+		<div className='bg-black w-full h-screen'>
+			{isPlaying && (
+				<video
+					key={videoKey}
+					controls={true}
+					width='100%'
+					height='100vh'
+					autoPlay
+				>
+					<source src={video} type='video/mp4' />
+				</video>
+			)}
+			<p className='text-black text-lg bg-blue-300 max-w-max px-2 rounded-sm mb-4 overflow-wrap'>
+				{transcript}
+			</p>
+		</div>
 	);
 }
