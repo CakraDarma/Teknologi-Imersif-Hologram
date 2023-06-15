@@ -38,7 +38,7 @@ export default function Home() {
 			setVideo('3lihatpura.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-		} else if (transcript.toLowerCase().includes('Daftar Informasi')) {
+		} else if (transcript.toLowerCase().includes('daftar informasi')) {
 			setPlaying(true);
 			setVideo('4menu.mp4');
 			resetTranscript();
@@ -46,6 +46,43 @@ export default function Home() {
 		} else if (transcript.toLowerCase().includes('keluar program')) {
 			setPlaying(true);
 			setVideo('5penutup.mp4');
+			resetTranscript();
+			setVideoKey((prevKey) => prevKey + 1);
+		} else if (transcript.toLowerCase().includes('halo adi')) {
+			setPlaying(true);
+			setVideo('01wait.mp4');
+			resetTranscript();
+			setVideoKey((prevKey) => prevKey + 1);
+		} else if (transcript.toLowerCase().includes('nomor 1 pura besakih')) {
+			setPlaying(true);
+			setVideo('02besakih.mp4');
+			resetTranscript();
+			setVideoKey((prevKey) => prevKey + 1);
+		} else if (transcript.toLowerCase().includes('nomor 2 pura lempuyang')) {
+			setPlaying(true);
+			setVideo('03lempuyang.mp4');
+			resetTranscript();
+			setVideoKey((prevKey) => prevKey + 1);
+		} else if (transcript.toLowerCase().includes('nomor 3 pura goa lawah')) {
+			setPlaying(true);
+			setVideo('04goalawah.mp4');
+			resetTranscript();
+			setVideoKey((prevKey) => prevKey + 1);
+		} else if (transcript.toLowerCase().includes('nomor 4 pura uluwatu')) {
+			setPlaying(true);
+			setVideo('05uluwatu.mp4');
+			resetTranscript();
+			setVideoKey((prevKey) => prevKey + 1);
+		} else if (transcript.toLowerCase().includes('nomor 5 pura batukaru')) {
+			setPlaying(true);
+			setVideo('06batukaru.mp4');
+			resetTranscript();
+			setVideoKey((prevKey) => prevKey + 1);
+		} else if (
+			transcript.toLowerCase().includes('nomor 6 pura pusering jagat')
+		) {
+			setPlaying(true);
+			setVideo('07puseringjagat.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
 		}
