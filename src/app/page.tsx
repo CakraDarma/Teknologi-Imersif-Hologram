@@ -9,12 +9,30 @@ export default function Home() {
 	const [isPlaying, setPlaying] = useState(false);
 	const [video, setVideo] = useState('');
 	const [videoKey, setVideoKey] = useState(0);
-	const [isReady, setIsReady] = useState(false);
+	const [isReady, setIsReady] = useState('false');
 
 	const startListening = () =>
 		SpeechRecognition.startListening({ continuous: true, language: 'id' });
 	let { transcript, browserSupportsSpeechRecognition, resetTranscript } =
 		useSpeechRecognition();
+
+	const myCallback = () => {
+		if (isReady == 'true') {
+			setPlaying(true);
+			setVideo('5penutup.mp4');
+			resetTranscript();
+			setVideoKey((prevKey) => prevKey + 1);
+			setIsReady('stop');
+		} else if (isReady == 'false') {
+			setPlaying(true);
+			setVideo('01wait.mp4');
+			resetTranscript();
+			setVideoKey((prevKey) => prevKey + 1);
+			setIsReady('true');
+		} else {
+			console.log('suksma');
+		}
+	};
 
 	useEffect(() => {
 		startListening();
@@ -23,112 +41,114 @@ export default function Home() {
 			setVideo('01wait.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-			setIsReady(true);
+			setIsReady('true');
 		} else if (transcript.toLowerCase().includes('mulai program')) {
 			setPlaying(true);
 			setVideo('1pembuka.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-			setIsReady(false);
+			setIsReady('false');
 		}
-		if (transcript.toLowerCase().includes('tentang pura') && isReady == true) {
+		if (
+			transcript.toLowerCase().includes('tentang pura') &&
+			isReady == 'true'
+		) {
 			setPlaying(true);
-			setVideo('2tentang.mp4');
+			setVideo('2tentangs.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-			setIsReady(false);
+			setIsReady('false');
 		} else if (
 			transcript.toLowerCase().includes('lihat pura') &&
-			isReady == true
+			isReady == 'true'
 		) {
 			setPlaying(true);
 			setVideo('3daftar.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-			setIsReady(false);
+			setIsReady('false');
 		} else if (
 			transcript.toLowerCase().includes('daftar informasi') &&
-			isReady == true
+			isReady == 'true'
 		) {
 			setPlaying(true);
 			setVideo('4menu.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-			setIsReady(false);
-		} else if (
-			transcript.toLowerCase().includes('keluar program') &&
-			isReady == true
-		) {
+			setIsReady('false');
+		} else if (transcript.toLowerCase().includes('keluar program')) {
 			setPlaying(true);
 			setVideo('5penutup.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-			setIsReady(false);
+			setIsReady('stop');
 		} else if (
 			transcript.toLowerCase().includes('pura besakih') &&
-			isReady == true
+			isReady == 'true'
 		) {
 			setPlaying(true);
 			setVideo('02besakih.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-			setIsReady(false);
+			setIsReady('false');
 		} else if (
 			transcript.toLowerCase().includes('pura lempuyang') &&
-			isReady == true
+			isReady == 'true'
 		) {
 			setPlaying(true);
 			setVideo('03lempuyang.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-			setIsReady(false);
+			setIsReady('false');
 		} else if (
 			transcript.toLowerCase().includes('pura goa lawah') &&
-			isReady == true
+			isReady == 'true'
 		) {
 			setPlaying(true);
 			setVideo('04goalawah.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-			setIsReady(false);
+			setIsReady('false');
 		} else if (
 			transcript.toLowerCase().includes('pura uluwatu') &&
-			isReady == true
+			isReady == 'true'
 		) {
 			setPlaying(true);
 			setVideo('05uluwatu.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-			setIsReady(false);
+			setIsReady('false');
 		} else if (
 			transcript.toLowerCase().includes('pura batukaru') &&
-			isReady == true
+			isReady == 'true'
 		) {
 			setPlaying(true);
 			setVideo('06batukaru.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-			setIsReady(false);
+			setIsReady('false');
 		} else if (
 			(transcript.toLowerCase().includes('pura pusering jagad') ||
 				transcript.toLowerCase().includes('pura pusering jagat')) &&
-			isReady == true
+			isReady == 'true'
 		) {
 			setPlaying(true);
 			setVideo('07puseringjagat.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-			setIsReady(false);
+			setIsReady('false');
 		} else if (
 			(transcript.toLowerCase().includes('pura puring jagad') ||
 				transcript.toLowerCase().includes('pura puring jagat')) &&
-			isReady == true
+			isReady == 'true'
 		) {
 			setPlaying(true);
 			setVideo('07puseringjagat.mp4');
 			resetTranscript();
 			setVideoKey((prevKey) => prevKey + 1);
-			setIsReady(false);
+			setIsReady('false');
+		} else {
+			console.log('suksma');
 		}
 	}, [isReady, resetTranscript, transcript]);
 
@@ -137,17 +157,18 @@ export default function Home() {
 			{isPlaying && (
 				<video
 					key={videoKey}
-					controls={false}
+					// controls={false}
 					width='100%'
 					height='100vh'
 					autoPlay
+					onEnded={() => myCallback()}
 				>
 					<source src={video} type='video/mp4' />
 				</video>
 			)}
-			<p className='text-black text-lg bg-blue-300 max-w-max px-2 rounded-sm mb-4 overflow-wrap'>
+			{/* <p className='text-black text-lg bg-blue-300 max-w-max px-2 rounded-sm mb-4 overflow-wrap'>
 				{transcript}
-			</p>
+			</p> */}
 		</div>
 	);
 }
